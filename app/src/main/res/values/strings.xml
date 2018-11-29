@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">FactoryFM</string>
+    <string name="search">Search</string>
+    <string name="artist">Artist</string>
+    <string name="parcel_artists">artists_list</string>
+    <string name="parcel_albums">albums_list</string>
+    <string name="extra_artist_name">artist_name</string>
+    <string name="extra_artist_mbid">artist_mbid</string>
+    <string name="extra_artist_image">artist_image</string>
+    <string name="extra_album_mbid">album_mbid</string>
+    <string name="extra_album_title">album_title</string>
 </resources>
