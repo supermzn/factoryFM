@@ -4,9 +4,14 @@
     <string name="artist">Artist</string>
     <string name="parcel_artists">artists_list</string>
     <string name="parcel_albums">albums_list</string>
+    <string name="parcel_tracks">tracks_list</string>
     <string name="extra_artist_name">artist_name</string>
     <string name="extra_artist_mbid">artist_mbid</string>
     <string name="extra_artist_image">artist_image</string>
     <string name="extra_album_mbid">album_mbid</string>
     <string name="extra_album_title">album_title</string>
+    <string name="empty_search_query">Type in the artist name</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="no_albums">No albums found four this artist</string>
+    <string name="no_results_for">No results for \"%1$s\"</string>
 </resources>

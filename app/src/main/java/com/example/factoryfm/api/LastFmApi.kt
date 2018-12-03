@@ -13,12 +13,14 @@ import retrofit2.http.QueryMap
 interface LastFmApi {
     @GET(SEARCH_ARTIST_URL)
     fun searchArtist(
-        @Query("artist") artist: String
+        @Query("artist") artist: String,
+        @Query("page") page: Int
     ): Call<FmResponse>
 
     @GET(TOP_ALBUMS_URL)
     fun getTopAlbums(
-        @Query("mbid") mbid: String
+        @Query("mbid") mbid: String,
+        @Query("page") page: Int
     ): Call<FmResponse>
 
     @GET(ALBUM_DETAILS_URL)

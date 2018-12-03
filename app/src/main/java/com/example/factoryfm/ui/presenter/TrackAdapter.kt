@@ -9,7 +9,7 @@ import com.example.factoryfm.R
 import com.example.factoryfm.model.Track
 import kotlinx.android.synthetic.main.track_item.view.*
 
-class TrackAdapter(private val tracks: List<Track>) : RecyclerView.Adapter<TrackAdapter.ViewHolder>() {
+class TrackAdapter(val tracks: List<Track>) : RecyclerView.Adapter<TrackAdapter.ViewHolder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         val view = LayoutInflater.from(p0.context).inflate(R.layout.track_item, p0, false)
         return ViewHolder(view)

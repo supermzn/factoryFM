@@ -3,15 +3,20 @@ package com.example.factoryfm.ui
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.view.View
+import android.widget.Toast
 import com.example.factoryfm.R
 import com.example.factoryfm.model.TopAlbum
 import com.example.factoryfm.ui.presenter.TopAlbumsContract
 import com.example.factoryfm.ui.presenter.TopAlbumsPresenter
 import com.example.factoryfm.utils.displayImageWithPlaceholder
 import kotlinx.android.synthetic.main.activity_top_albums.*
+import kotlinx.android.synthetic.main.common_layout.*
 
 class TopAlbumsActivity : AppCompatActivity(), TopAlbumsContract.View {
-    private val topAlbumsPresenter: TopAlbumsPresenter by lazy { TopAlbumsPresenter(this) }
+    private val topAlbumsPresenter: TopAlbumsPresenter by lazy { TopAlbumsPresenter(this, this) }
     private val topAlbumsAdapter by lazy { TopAlbumsAdapter(this) }
 
 
@@ -31,20 +36,46 @@ class TopAlbumsActivity : AppCompatActivity(), TopAlbumsContract.View {
 
         recycler_view.layoutManager = GridLayoutManager(this, 2)
         recycler_view.adapter = topAlbumsAdapter
+        recycler_view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (!recyclerView.canScrollVertically(LinearLayoutManager.VERTICAL) && topAlbumsAdapter.topTopAlbums.isNotEmpty()) {
+                    loadTopAlbums(artistMbid)
+                }
+            }
+        })
+
         if (savedInstanceState != null) {
             val restoredArtistList: ArrayList<TopAlbum> =
                 savedInstanceState.getParcelableArrayList(getString(R.string.parcel_albums))
             onNewDataReceived(restoredArtistList)
         }
-        artistMbid?.let {
-            if (topAlbumsAdapter.topTopAlbums.isEmpty())
-                topAlbumsPresenter.loadTopAlbums(it)
+        loadTopAlbums(artistMbid)
+    }
+
+    private fun loadTopAlbums(mbid: String?) {
+        mbid?.let {
+            progressBar.visibility = View.VISIBLE
+            info_text.visibility = View.GONE
+            topAlbumsPresenter.loadTopAlbums(it)
         }
     }
 
     override fun onNewDataReceived(data: List<TopAlbum>) {
+        progressBar.visibility = View.GONE
+        info_text.visibility = View.GONE
         topAlbumsAdapter.addElements(data)
         topAlbumsAdapter.notifyDataSetChanged()
+    }
+
+    override fun onError(message: String) {
+        progressBar.visibility = View.GONE
+        if (topAlbumsAdapter.topTopAlbums.isEmpty()) {
+            info_text.visibility = View.VISIBLE
+            info_text.text = message
+        } else {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {

@@ -44,4 +44,6 @@
             android:textColor="@android:color/white"
             android:maxLines="2"
             android:ellipsize="end"/>
+    <include
+            layout="@layout/common_layout" />
 </android.support.constraint.ConstraintLayout>

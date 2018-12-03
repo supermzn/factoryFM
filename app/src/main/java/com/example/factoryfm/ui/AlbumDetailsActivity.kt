@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import com.example.factoryfm.R
 import com.example.factoryfm.model.AlbumDetails
 import com.example.factoryfm.ui.presenter.AlbumDetailsContract
@@ -11,10 +12,11 @@ import com.example.factoryfm.ui.presenter.AlbumDetailsPresenter
 import com.example.factoryfm.ui.presenter.TrackAdapter
 import com.example.factoryfm.utils.displayImageWithPlaceholder
 import kotlinx.android.synthetic.main.activity_album_details.*
+import kotlinx.android.synthetic.main.common_layout.*
 
 class AlbumDetailsActivity : AppCompatActivity(), AlbumDetailsContract.View {
     private val presenter by lazy { AlbumDetailsPresenter(this) }
-    lateinit var trackAdapter: TrackAdapter
+    private lateinit var trackAdapter: TrackAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,25 +29,33 @@ class AlbumDetailsActivity : AppCompatActivity(), AlbumDetailsContract.View {
         val requestParams = mutableMapOf<String, String>()
         if (albumMbid != null) {
             requestParams["mbid"] = albumMbid
-        }
-        else if(albumTitle != null && albumArtist != null) {
+        } else if (albumTitle != null && albumArtist != null) {
             requestParams["album"] = albumTitle
             requestParams["artist"] = albumArtist
         }
+        progressBar.visibility = View.VISIBLE
         presenter.fetchAlbumInfo(requestParams)
     }
 
     override fun showAlbumInfo(album: AlbumDetails) {
+        progressBar.visibility = View.GONE
+        info_text.visibility = View.GONE
         album_title.text = album.name
         artist_name.text = album.artist
         val url = album.image[3].url
 
-        displayImageWithPlaceholder(url, album_cover, R.drawable. album_placeholder, this)
+        displayImageWithPlaceholder(url, album_cover, R.drawable.album_placeholder, this)
 
         recycler_view.layoutManager = LinearLayoutManager(parent, LinearLayoutManager.VERTICAL, false)
         trackAdapter = TrackAdapter(album.tracks.track)
         val divider = DividerItemDecoration(recycler_view.context, LinearLayoutManager.VERTICAL)
         recycler_view.addItemDecoration(divider)
         recycler_view.adapter = trackAdapter
+    }
+
+    override fun onError(message: String) {
+        progressBar.visibility = View.GONE
+        info_text.text = message
+        info_text.visibility = View.VISIBLE
     }
 }
