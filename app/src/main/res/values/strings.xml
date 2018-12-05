@@ -8,10 +8,14 @@
     <string name="extra_artist_name">artist_name</string>
     <string name="extra_artist_mbid">artist_mbid</string>
     <string name="extra_artist_image">artist_image</string>
-    <string name="extra_album_mbid">album_mbid</string>
-    <string name="extra_album_title">album_title</string>
+    <string name="extra_album">extra_album</string>
     <string name="empty_search_query">Type in the artist name</string>
     <string name="something_went_wrong">Something went wrong</string>
     <string name="no_albums">No albums found four this artist</string>
     <string name="no_results_for">No results for \"%1$s\"</string>
+    <string name="unable_to_save">Unable to save this album</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="no_tracks">No tracks found</string>
+    <string name="no_saved_albums">No saved albums found</string>
 </resources>

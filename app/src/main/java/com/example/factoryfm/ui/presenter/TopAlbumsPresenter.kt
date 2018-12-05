@@ -2,7 +2,9 @@ package com.example.factoryfm.ui.presenter
 
 import android.content.Context
 import com.example.factoryfm.R
+import com.example.factoryfm.model.AlbumDetails
 import com.example.factoryfm.model.FmResponse
+import com.example.factoryfm.model.TopAlbum
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,11 +30,8 @@ class TopAlbumsPresenter(val view: TopAlbumsContract.View, val context: Context)
                         if (results == null || results.isEmpty()) {
                             view.onError(context.getString(R.string.no_albums))
                         } else {
-                            view.onNewDataReceived(results)
-                        }
 
-                        results?.let {
-                            view.onNewDataReceived(it)
+                            view.onNewDataReceived(convertToAlbumDetails(results))
                         }
                     } else {
                         view.onError(context.getString(R.string.something_went_wrong))
@@ -42,6 +41,20 @@ class TopAlbumsPresenter(val view: TopAlbumsContract.View, val context: Context)
                 }
             })
         }
+    }
+
+    private fun convertToAlbumDetails(list: List<TopAlbum>): List<AlbumDetails> {
+        val albumDetailsArray: MutableList<AlbumDetails> = mutableListOf()
+        for (item in list) {
+            val album = AlbumDetails(
+                name = item.name,
+                mbid = item.mbid ?: "",
+                artist = item.artist.name,
+                image = item.image
+            )
+            albumDetailsArray.add(album)
+        }
+        return albumDetailsArray
     }
 
 }

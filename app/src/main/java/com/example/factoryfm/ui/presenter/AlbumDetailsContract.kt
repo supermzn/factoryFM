@@ -5,9 +5,15 @@ import com.example.factoryfm.model.AlbumDetails
 interface AlbumDetailsContract {
     interface View : MainContract.MainView{
         fun showAlbumInfo(album: AlbumDetails)
+
+        fun showAction(actionId: Int)
     }
 
     interface Presenter : MainContract.MainPresenter {
-        fun fetchAlbumInfo(params: Map<String, String>)
+        fun saveAlbum()
+
+        fun removeAlbum()
+
+        fun fetchAlbumInfo(album: AlbumDetails?)
     }
 }

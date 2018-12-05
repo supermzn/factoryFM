@@ -8,12 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.factoryfm.R
-import com.example.factoryfm.model.TopAlbum
+import com.example.factoryfm.model.AlbumDetails
 import com.example.factoryfm.utils.displayImageWithPlaceholder
 import kotlinx.android.synthetic.main.album_item.view.*
 
 class TopAlbumsAdapter(private val context: Context) : RecyclerView.Adapter<TopAlbumsAdapter.ViewHolder>() {
-    var topTopAlbums: MutableList<TopAlbum> = mutableListOf()
+    var topTopAlbums: MutableList<AlbumDetails> = mutableListOf()
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): TopAlbumsAdapter.ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.album_item, p0, false)
@@ -26,12 +26,12 @@ class TopAlbumsAdapter(private val context: Context) : RecyclerView.Adapter<TopA
         holder.bind(topTopAlbums[position])
     }
 
-    fun addElements(data: List<TopAlbum>) {
+    fun addElements(data: List<AlbumDetails>) {
         topTopAlbums.addAll(data)
     }
 
     class ViewHolder(itemView: View, private val context: Context) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item: TopAlbum) {
+        fun bind(item: AlbumDetails) {
             itemView.album_title.text = item.name
 
             val url = item.image[2].url
@@ -41,9 +41,7 @@ class TopAlbumsAdapter(private val context: Context) : RecyclerView.Adapter<TopA
             itemView.setOnClickListener {
                 val intent = Intent(context, AlbumDetailsActivity::class.java)
                 val bundle = Bundle()
-                bundle.putString(context.getString(R.string.extra_album_mbid), item.mbid)
-                bundle.putString(context.getString(R.string.extra_album_title), item.name)
-                bundle.putString(context.getString(R.string.extra_artist_name), item.artist.name)
+                bundle.putParcelable(context.getString(R.string.extra_album), item)
                 intent.putExtras(bundle)
                 context.startActivity(intent)
             }

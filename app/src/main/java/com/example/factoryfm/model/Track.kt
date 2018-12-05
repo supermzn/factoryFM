@@ -5,19 +5,16 @@ import android.os.Parcelable
 
 data class Track (
     val name: String,
-    val duration: Int,
-    val artist: Artist
+    val duration: Int
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
-        parcel.readInt(),
-        parcel.readParcelable(Artist::class.java.classLoader)
+        parcel.readInt()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
         parcel.writeInt(duration)
-        parcel.writeParcelable(artist, flags)
     }
 
     override fun describeContents(): Int {

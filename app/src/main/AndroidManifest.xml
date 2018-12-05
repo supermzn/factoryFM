@@ -13,7 +13,7 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:networkSecurityConfig="@xml/network_security_config">
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.SavedAlbumsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.SearchArtistActivity"
-        android:parentActivityName=".ui.MainActivity"/>
+        android:parentActivityName=".ui.SavedAlbumsActivity"/>
         <activity android:name=".ui.TopAlbumsActivity"/>
         <activity android:name=".ui.AlbumDetailsActivity"/>
     </application>

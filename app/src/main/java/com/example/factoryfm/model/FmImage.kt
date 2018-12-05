@@ -23,7 +23,7 @@ data class FmImage(
         return 0
     }
 
-    companion object CREATOR :  Parcelable.Creator<FmImage> {
+    companion object CREATOR : Parcelable.Creator<FmImage> {
         override fun createFromParcel(parcel: Parcel): FmImage {
             return FmImage(parcel)
         }

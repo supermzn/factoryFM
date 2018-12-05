@@ -5,15 +5,11 @@ import android.os.Parcelable
 
 data class TopAlbum(
     val name: String,
-    val playcount: Int,
-    val mbid: String,
-    val url: String,
+    var mbid: String?,
     val artist: Artist,
-    val image: List<FmImage>
+    var image: List<FmImage>
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readInt(),
         parcel.readString(),
         parcel.readString(),
         parcel.readParcelable(Artist::class.java.classLoader),
@@ -22,9 +18,7 @@ data class TopAlbum(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
-        parcel.writeInt(playcount)
         parcel.writeString(mbid)
-        parcel.writeString(url)
         parcel.writeParcelable(artist, flags)
         parcel.writeTypedList(image)
     }

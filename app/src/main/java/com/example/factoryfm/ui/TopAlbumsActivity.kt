@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Toast
 import com.example.factoryfm.R
-import com.example.factoryfm.model.TopAlbum
+import com.example.factoryfm.model.AlbumDetails
 import com.example.factoryfm.ui.presenter.TopAlbumsContract
 import com.example.factoryfm.ui.presenter.TopAlbumsPresenter
 import com.example.factoryfm.utils.displayImageWithPlaceholder
@@ -46,7 +46,7 @@ class TopAlbumsActivity : AppCompatActivity(), TopAlbumsContract.View {
         })
 
         if (savedInstanceState != null) {
-            val restoredArtistList: ArrayList<TopAlbum> =
+            val restoredArtistList: ArrayList<AlbumDetails> =
                 savedInstanceState.getParcelableArrayList(getString(R.string.parcel_albums))
             onNewDataReceived(restoredArtistList)
         }
@@ -61,7 +61,7 @@ class TopAlbumsActivity : AppCompatActivity(), TopAlbumsContract.View {
         }
     }
 
-    override fun onNewDataReceived(data: List<TopAlbum>) {
+    override fun onNewDataReceived(data: List<AlbumDetails>) {
         progressBar.visibility = View.GONE
         info_text.visibility = View.GONE
         topAlbumsAdapter.addElements(data)
